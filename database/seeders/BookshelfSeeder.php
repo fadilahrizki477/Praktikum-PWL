@@ -3,22 +3,21 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Support\Facades\DB;
 
 class BookshelfSeeder extends Seeder
 {
+    use WithoutModelEvents;
+
     public function run(): void
     {
-        $shelves = [
-            ['code' => 'RAK-A', 'name' => 'Rak A - Teknologi'],
-            ['code' => 'RAK-B', 'name' => 'Rak B - Sains'],
-            ['code' => 'RAK-C', 'name' => 'Rak C - Ekonomi'],
-            ['code' => 'RAK-D', 'name' => 'Rak D - Sosial'],
-            ['code' => 'RAK-E', 'name' => 'Rak E - Referensi'],
-        ];
-
-        foreach ($shelves as $shelf) {
-            DB::table('bookshelfs')->insert($shelf);
-        }
+        DB::table('bookshelfs')->insert([
+            [
+                'id'   => 1,
+                'code' => 'A1',
+                'name' => 'Programming'
+            ]
+        ]);
     }
 }
