@@ -16,6 +16,28 @@ class Book extends Model
         'bookshelf_id',
     ];
 
+    public static function getDataBooks(): array
+    {
+        $books = self::with('bookshelf')->get();
+        $data  = [];
+        $no    = 1;
+
+        foreach ($books as $book) {
+            $data[] = [
+                $no++,
+                $book->title,
+                $book->author,
+                $book->year,
+                $book->publisher,
+                $book->city,
+                ($book->bookshelf->code ?? '-') . '-' . ($book->bookshelf->name ?? '-'),
+            ];
+        }
+
+        return $data;
+    }
+
+
     // Relasi: Book milik satu Bookshelf
     public function bookshelf()
     {

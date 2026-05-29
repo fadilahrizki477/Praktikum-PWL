@@ -9,7 +9,34 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="mb-6">
                 <x-primary-button tag="a" href="{{ route('book.create') }}">Tambah Data Buku</x-primary-button>
+                <x-primary-button tag="a" href="{{ route('book.print') }}" target="blank">Print Data Buku</x-primary-button>
+                <x-primary-button tag="a" href="{{ route('book.export') }}" target="blank">Export Data Buku</x-primary-button>
+                <x-primary-button x-data="" x-on:click.prevent="$dispatch('open-modal','import-book')">
+                    {{ __('Import Data Excel') }}
+                </x-primary-button>
             </div>
+
+            <x-modal name="import-book" focusable maxWidth="xl">
+                <form method="POST" action="{{ route('book.import') }}" class="p-6" enctype="multipart/form-data">
+                    @csrf
+                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                        {{ __('Import Data Buku') }}
+                    </h2>
+                    <div class="mt-4 max-w-xl">
+                        <x-input-label for="file" value="File Excel (.xlsx, .xls)" />
+                        <input type="file" id="file" name="file" accept=".xlsx,.xls"
+                            class="mt-1 block w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer" required />
+                    </div>
+                    <div class="mt-6 flex justify-end gap-3">
+                        <x-secondary-button x-on:click="$dispatch('close')">
+                            {{ __('Batal') }}
+                        </x-secondary-button>
+                        <x-primary-button type="submit">
+                            {{ __('Upload') }}
+                        </x-primary-button>
+                    </div>
+                </form>
+            </x-modal>
 
             <x-table>
                 <x-slot name="header">
